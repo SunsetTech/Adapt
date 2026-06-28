@@ -17,7 +17,7 @@ Bubble.Class = OOP.Derive(
 			return table.unpack(self)
 		end;
 		---@param self Adapt.Execution.Bubble
-		---@param Buffer Moonrise.Stream.Base
+		---@param Buffer Moonrise.Stream.Formatter.Indented
 		---@param Flags Tools.Pretty.Any.Flags
 		---@param Cache table<userdata|table,boolean>
 		---@param Mentioned table<string,userdata|table>
@@ -35,15 +35,11 @@ Bubble.Class = OOP.Derive(
 					SkipNumericKeys = true;
 					SkipCache = Flags.SkipCache;
 					Multiline = Flags.Multiline;
+					Override = Flags.Override;
 				}, 
 				Cache, Mentioned
 			)
 			Buffer:Write")"
-			--[[if Flags.Multiline then
-				Buffer:AddLine")"
-			else
-				Buffer:Write")"
-			end]]
 		end;
 	}
 )

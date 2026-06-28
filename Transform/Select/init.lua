@@ -79,9 +79,8 @@ function Select:__tostring()
 end
 
 function Select:__pretty(Buffer, Flags, Cache, Mentioned)
-	Buffer:Write"Adapt.Transform.Select("
+	Buffer:Write"Adapt.Transform.Select"
 	Pretty.Any(self.Children, Buffer, Flags, Cache, Mentioned)
-	Buffer:Write")"
 end
 
 return Select

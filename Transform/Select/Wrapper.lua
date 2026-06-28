@@ -16,7 +16,7 @@ function Wrapper:Initialize(Instance, Which, Value)
 	Instance.Value = Value
 end
 
----@param Buffer Moonrise.Stream.Base
+---@param Buffer Moonrise.Stream.Formatter.Indented
 ---@param Flags Tools.Pretty.Any.Flags
 ---@param Cache table
 ---@param Mentioned table
@@ -31,11 +31,9 @@ function Wrapper:__pretty(Buffer, Flags, Cache, Mentioned)
 			SkipCache = Flags.SkipCache;
 			SkipNumericKeys = true;
 			SkipRootBookends = true;
+			Override = {};
 		}, Cache, Mentioned
 	)
-	--[[if Flags.Multiline then 
-		Buffer:Write"\n"
-	end]]
 	Buffer:Write")"
 end
 

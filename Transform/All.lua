@@ -72,6 +72,7 @@ end
 
 ---@return string
 function All:__tostring()
+	error"?"
 	return Pretty.ToString(self)
 end
 

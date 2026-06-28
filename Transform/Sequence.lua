@@ -2,7 +2,6 @@
 local Pretty = require"Moonrise.Tools.Pretty"
 local OOP = require"Moonrise.OOP"
 local Execution = require"Adapt.Execution"
-local zone = require"jit.zone"
 local Compound = require"Adapt.Transform.Compound"
 
 ---@class Adapt.Transform.Sequence : Adapt.Transform.Compound
@@ -70,23 +69,23 @@ function Sequence:__tostring()
 	return "(".. table.concat(Parts, " * ") ..")"
 end
 
+---@param Buffer Moonrise.Stream.Formatter.Indented
+---@param Flags any
+---@param Cache any
+---@param Mentioned any
 function Sequence:__pretty(Buffer, Flags, Cache, Mentioned)
-	Buffer:Write"Adapt.Transform.Sequence{"
+	Buffer:Write"Adapt.Transform.Sequence"
 	Pretty.Any(
 		self.Children, Buffer, {
 			Multiline = Flags.Multiline;
-			SkipRootBookends = true;
+			SkipRootBookends = false;
 			SkipNumericKeys = true;
 			SkipCache = Flags.SkipCache;
 			ObjectMode = Flags.ObjectMode;
 			Colorized = Flags.Colorized;
+			Override = {};
 		}, Cache, Mentioned
 	)
-	if Flags.Multiline then
-		Buffer:AddLine"}"
-	else
-		Buffer:Write")"
-	end
 end
 
 return Sequence

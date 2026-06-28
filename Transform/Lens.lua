@@ -8,7 +8,6 @@
 ---@field __DebugName string?
 
 local Pretty = require"Moonrise.Tools.Pretty"
-local Formatter = require"Moonrise.Stream.Formatter"
 local Null = require"Moonrise.Object.Null"
 local OOP = require"Moonrise.OOP"
 
@@ -88,12 +87,11 @@ function Lens:__tostring()
 	return "(".. tostring(self.Children.__LensSubpattern) .."/{".. (self.Definition.__DebugName or tostring(self.Definition)) .."})"
 end
 
----@param Buffer Moonrise.Stream.Base
+---@param Buffer Moonrise.Stream.Formatter.Indented
 ---@param Flags Tools.Pretty.Any.Flags
 ---@param Cache Tools.Pretty.Any.Cache
 ---@param Mentioned Tools.Pretty.Any.Mentioned
 function Lens:__pretty(Buffer, Flags, Cache, Mentioned)
-	---@cast Buffer Moonrise.Stream.Formatter
 	Buffer:Write"Adapt.Transform.Lens("
 	if Flags.Multiline then
 		Buffer:NewLine()

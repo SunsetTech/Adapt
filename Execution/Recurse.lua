@@ -25,7 +25,7 @@ return function(CurrentState, MethodName, Pattern, Argument, Lookahead)
 	---@cast CurrentPattern Adapt.Transform.Base
 	
 	while OOP.Reflection.Type.Of(Jump, CurrentPattern) do
-		CurrentPattern = CurrentState.JumpMap[CurrentPattern]
+		CurrentPattern = CurrentState.Maps.Jump[CurrentPattern]
 	end
 	
 	local Bookmark = CurrentState:OpenFrame(CurrentPattern, CurrentArgument, Lookahead)

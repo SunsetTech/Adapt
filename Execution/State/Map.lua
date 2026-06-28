@@ -7,19 +7,19 @@ local Jump = require"Adapt.Transform.Jump"
 
 local OOP = require"Moonrise.OOP"
 
----@param Pattern Adapt.Transform.Base
+---@param Node Adapt.Transform.Base
 ---@param SubPath table<integer, string>
-local function ForwardSearch(Pattern, SubPath)
+local function ForwardSearch(Node, SubPath)
 	for Index = 1,#SubPath do
 		local Part = SubPath[Index]
-		---@cast Pattern Adapt.Transform.Compound
-		if Pattern.Children and Pattern.Children[Part] then
-			Pattern = Pattern.Children[Part]
+		---@cast Node Adapt.Transform.Compound
+		if Node.Children and Node.Children[Part] then
+			Node = Node.Children[Part]
 		else
 			return
 		end
 	end
-	return Pattern
+	return Node
 end
 
 ---@param Stack Adapt.Transform.Base[]
@@ -32,7 +32,7 @@ local function BackwardSearch(Stack, SubPath, At)
 		local Needle = ForwardSearch(Haystack, SubPath)
 		if Needle then
 			local FoundAtParts = {}
-			for PartIndex = 1, Index do
+			for _ = 1, Index do
 				table.insert(FoundAtParts, At[Index])
 			end
 			if #SubPath == 1 then
@@ -44,33 +44,41 @@ local function BackwardSearch(Stack, SubPath, At)
 	end
 end
 
+---@class Adapt.Execution.State.Map.__Instance: Adapt.Execution.State.Map
+---@overload fun()
+
 ---@class Adapt.Execution.State.Map
+---@field Node table<string, Adapt.Transform.Base>
 ---@field Name table<Adapt.Transform.Base, string>
 ---@field Jump table<Adapt.Transform.Base, Adapt.Transform.Base>
+---@overload fun(): Adapt.Execution.State.Map.__Instance
 local Map = OOP.Declarator.Shortcuts"Adapt.Execution.State.Map"
 
+---@param Instance Adapt.Execution.State.Map
 function Map:Initialize(Instance)
+	Instance.Node = {}
 	Instance.Name = {}
 	Instance.Jump = {}
 end
 
----@param Pattern Adapt.Transform.Base
----@param At string[]
----@param Stack Adapt.Transform.Base[]
----@param Seen table<Adapt.Transform.Jump, true>
-function Map:Link(Pattern, At, Stack, Seen)
+---@param Node Adapt.Transform.Base
+---@param At string[]?
+---@param Stack Adapt.Transform.Base[]?
+---@param Seen table<Adapt.Transform.Jump, boolean>?
+function Map:Link(Node, At, Stack, Seen)
 	Seen = Seen or {}
-	Stack = Stack or {Pattern}
+	Stack = Stack or {Node}
 	At = At or {"Root"}
 	local Path = table.concat(At,".")
-	if self.Name[Pattern] == Path then
+	if self.Name[Node] == Path then
 		return --Already linked beyond here
 	end
-	self.Name[Pattern] = Path
+	self.Name[Node] = Path
+	self.Node[Path] = Node
 	---@diagnostic disable-next-line:undefined-field
-	if Pattern.Children ~= nil then
-		---@cast Pattern Adapt.Transform.Compound
-		for Name, Child in pairs(Pattern.Children) do
+	if Node.Children ~= nil then
+		---@cast Node Adapt.Transform.Compound
+		for Name, Child in pairs(Node.Children) do
 			if Seen[Child] then
 				error("Encountered jump ".. tostring(Child) .." twice, duplicate jumps would break parsing")
 			elseif OOP.Reflection.Type.Of(Jump, Child) then

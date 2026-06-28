@@ -100,19 +100,15 @@ function Without:Lower(CurrentState, Argument)
 	return false
 end
 
----@param Buffer Moonrise.Object.AutoFormatter
+---@param Buffer Moonrise.Stream.Formatter.Indented
 ---@param Flags Tools.Pretty.Any.Flags
 ---@param Cache Tools.Pretty.Any.Cache
 ---@param Mentioned Tools.Pretty.Any.Mentioned
 function Without:__pretty(Buffer, Flags, Cache, Mentioned)
 	Buffer:Write"Adapt.Transform.Without("
-	--[[Buffer:AdjustIndentation(1)
-	Buffer:AddLine""]]
 	Pretty.Any(self.Children.Exclude, Buffer, Flags, Cache, Mentioned)
 	Buffer:Write","
-	--Buffer:AddLine""
 	Pretty.Any(self.Children.Include, Buffer, Flags, Cache, Mentioned)
-	--[[Buffer:AdjustIndentation(-1)]]
 	Buffer:Write")"
 end
 

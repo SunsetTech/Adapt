@@ -43,9 +43,9 @@ end
 end]]
 
 function Dynamic:__pretty(Buffer, Flags, Cache, Mentioned)
-	Buffer:Write("@".. OOP.Reflection.Type.Name(self))
-	Pretty.Any(self.__Arguments, Buffer, Flags, Cache, Mentioned)
-	Buffer:Write"->"
+	--Buffer:Write("@".. OOP.Reflection.Type.Name(self))
+	--Pretty.Any(self.__Arguments, Buffer, Flags, Cache, Mentioned)
+	--Buffer:Write"->"
 	Pretty.Any(self.Children.__Generated, Buffer, Flags, Cache, Mentioned)
 end
 

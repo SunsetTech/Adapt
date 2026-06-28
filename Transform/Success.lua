@@ -23,6 +23,7 @@ function Success:Lower()
 end
 
 ---@return boolean
+---@return table
 function Success:Raise()
 	return self.Value, Null
 end
