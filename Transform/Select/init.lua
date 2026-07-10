@@ -65,8 +65,9 @@ function Select:Lower(CurrentState, Argument)
 		local Child = self.Children[Index]
 		local Success, Result = TryChild(CurrentState, "Lower", Index, Child, Argument)
 		return Success, Result
+	else
+		error"Wrapperless choice NYI"
 	end
-	return false
 end
 
 ---@return string

@@ -1,4 +1,4 @@
---TODO probably delete this as i'm not sure it can be unfucked
+-- TODO: probably delete this as i'm not sure it can be fixed
 local OOP = require"Moonrise.OOP"
 
 local Execution = require"Adapt.Execution"

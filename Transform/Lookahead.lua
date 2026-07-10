@@ -1,6 +1,5 @@
 ---@diagnostic disable:trailing-space
 local Execution = require"Adapt.Execution"
-local Pretty = require"Moonrise.Tools.Pretty"
 local Null = require"Moonrise.Object.Null"
 
 local OOP = require"Moonrise.OOP"
@@ -38,11 +37,7 @@ end
 function Lookahead:Lower(CurrentState, Argument)
 	if Argument == Null then
 		CurrentState:AddConstraint(self.Children.__LookaheadPattern, nil, self.Mode)
-		if self.Mode == "Negative" then
-			return true
-		else 
-			return true
-		end
+		return true
 	end
 	return false
 end
