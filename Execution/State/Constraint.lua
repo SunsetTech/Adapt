@@ -18,6 +18,7 @@ function Constraint:Initialize(Instance, Position, Pattern, Argument, Mode)
 		Positive = false
 	end
 	Instance.Position = Position
+	assert(Instance.Position ~= nil)
 	Instance.Pattern = Pattern
 	Instance.Argument = Argument
 	Instance.Mode = Mode

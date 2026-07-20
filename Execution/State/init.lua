@@ -127,8 +127,8 @@ end
 ---@return Adapt.Execution.State.Frame ResultFrame
 function State:CommitFrame(Bookmark)
 	local ResultFrame = self:CloseFrame(Bookmark)
-	Array.Clean(ResultFrame.Constraints)
-	Array.ShallowCopy(ResultFrame.Constraints, Bookmark.Constraints)
+	Array.ShallowCopy(Bookmark.Constraints, ResultFrame.Constraints)
+	Array.Clean(Bookmark.Constraints)
 	for _, Key in ipairs(Bookmark.Data.Variables.Keys) do
 		ResultFrame.Data:Set(Key, Bookmark.Data:Get(Key))
 	end
@@ -166,8 +166,7 @@ function State:CheckConstraints()
 	for Index = #Constraints, 1, -1 do
 		local Current = Constraints[Index]
 		local Bookmark = self:OpenFrame(Current.Pattern)
-
-		self:Goto(Constraint.Position)
+		self:Goto(Current.Position)
 		local Success = Recurse(self, "Raise", Current.Pattern, Current.Argument)
 		
 		if Current.Mode == "Negative" then
@@ -195,6 +194,7 @@ end
 
 ---@param String string
 function State:Write(String)
+	assert(type(String) == "string")
 	self.Buffer:Write(String)
 	self:GetFrame().Translation.Chunk = String
 	self:GetFrame().Translation.Newlines = FindNewlines(String)

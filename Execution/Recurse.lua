@@ -13,7 +13,7 @@ local Jump
 ---@return any Result
 ---@return Adapt.Execution.State.Frame Bookmark
 ---@return Adapt.Execution.State.Frame ResultFrame
-return function(CurrentState, MethodName, Pattern, Argument, Lookahead)
+local function Recurse(CurrentState, MethodName, Pattern, Argument, Lookahead)
 	if Jump == nil then
 		Jump = require"Adapt.Transform.Jump"
 	end
@@ -64,3 +64,5 @@ return function(CurrentState, MethodName, Pattern, Argument, Lookahead)
 	end
 	return Success, Result, Bookmark, ResultFrame
 end
+
+return Recurse

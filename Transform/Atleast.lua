@@ -44,7 +44,7 @@ function Atleast:Lower(CurrentState, Arguments)
 			if Success then
 				table.insert(Results, Result)
 			else
-				error"oh no"
+				return false, Results
 			end
 		end
 		return true, Results

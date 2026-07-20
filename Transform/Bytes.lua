@@ -19,8 +19,10 @@ end
 ---@param Input any
 ---@return boolean
 function Bytes:Lower(CurrentState, Input)
+	if (type(Input) ~= "string") then return false end
 	if Input and #Input == self.Count then
-		return CurrentState:Write(Input)
+		local Success = CurrentState:Write(Input)
+		return Success
 	end
 	return false
 end

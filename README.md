@@ -16,6 +16,7 @@ The same grammar definition may be used to parse a stream of text into a Concret
 ### Ordered choice
 Implemented in Transform/Select/init.lua
 :Raise() results in a Wrapper enclosed object indicating the branch taken, enabling :Lower() to be O(1).
+Methods for dealing with the extra clutter are exposed in companion library [Concrete](http://github.com/sunsetTech/Concrete)
 
 ### Lookahead
 Implemented in Transform/Lookahead.lua
