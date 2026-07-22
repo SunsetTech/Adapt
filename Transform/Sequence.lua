@@ -69,14 +69,14 @@ function Sequence:__tostring()
 	return "(".. table.concat(Parts, " * ") ..")"
 end
 
----@param Buffer Moonrise.Stream.Formatter.Indented
+---@param Sink Moonrise.Stream.Formatter.Fancy
 ---@param Flags any
 ---@param Cache any
 ---@param Mentioned any
-function Sequence:__pretty(Buffer, Flags, Cache, Mentioned)
-	Buffer:Write"Adapt.Transform.Sequence"
+function Sequence:__pretty(Sink, Flags, Cache, Mentioned)
+	Sink:Write"Adapt.Transform.Sequence"
 	Pretty.Any(
-		self.Children, Buffer, {
+		self.Children, Sink, {
 			Multiline = Flags.Multiline;
 			SkipRootBookends = false;
 			SkipNumericKeys = true;

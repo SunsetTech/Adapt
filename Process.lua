@@ -10,13 +10,14 @@ local Execution = require"Adapt.Execution"
 ---@param Argument any
 ---@param Maps Adapt.Execution.State.Map?
 ---@param Fragment boolean?
+---@param Wrapper Adapt.Execution.State.Wrapper?
 ---@return boolean Success
 ---@return any Result
 ---@return Adapt.Execution.State ProgramState
-return function(Root, MethodName, Buffer, Argument, Start, Maps, Fragment)
+return function(Root, MethodName, Buffer, Argument, Start, Maps, Fragment, Wrapper)
 	assert(Root ~= nil)
 	Start = Start or Root
-	local ProgramState = Execution.State(Root, Buffer, Maps, Fragment)
+	local ProgramState = Execution.State(Root, Buffer, Maps, Fragment, Wrapper)
 	ProgramState:Optimize()
 	Buffer:Optimize()
 	local Success, Result = Execution.Recurse(ProgramState, MethodName, Start, Argument)

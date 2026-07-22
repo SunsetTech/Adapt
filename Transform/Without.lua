@@ -50,7 +50,7 @@ end
 ---@return any
 function Without:Lower(CurrentState, Argument)
 	local Start = CurrentState:Position()
-	local IncludeSuccess, IncludeResult = Execution.Recurse(CurrentState, "Raise", self.Children.Include, Argument)
+	local IncludeSuccess, IncludeResult = Execution.Recurse(CurrentState, "Lower", self.Children.Include, Argument)
 	if IncludeSuccess then
 		local After = CurrentState:Position()
 		CurrentState:Goto(Start)

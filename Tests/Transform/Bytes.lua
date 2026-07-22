@@ -38,6 +38,20 @@ return Test.Series(
 						assert(Result == TestContent, "Wrong result")
 					end
 				);
+				Test.Passes(
+					"Rejects undersized", function()
+						local TestSink = Stream.String""
+						local Success = Adapt.Process(TestGrammar, "Lower", TestSink, "ab")
+						Test.Deny(Success, "failed to reject")
+					end
+				);
+				Test.Passes(
+					"Rejects oversized", function()
+						local TestSink = Stream.String""
+						local Success = Adapt.Process(TestGrammar, "Lower", TestSink, "abcd")
+						Test.Deny(Success, "failed to reject")
+					end
+				);
 			}
 		);
 		Test.Series(

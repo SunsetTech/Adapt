@@ -53,10 +53,14 @@ function Grammar:__tostring()
 	)
 end
 
-function Grammar:__pretty(Buffer, Flags, Cache, Mentioned)
-	Buffer:Write"Grammar"
+---@param Sink Moonrise.Stream.Formatter.Fancy
+---@param Flags Tools.Pretty.Any.Flags?
+---@param Cache Tools.Pretty.Any.Cache?
+---@param Mentioned Tools.Pretty.Any.Mentioned?
+function Grammar:__pretty(Sink, Flags, Cache, Mentioned)
+	Sink:Write"Grammar"
 	Pretty.Any(
-		self.Children, Buffer, {
+		self.Children, Sink, {
 			SkipRootBookends = false;
 			SkipNumericKeys = false;
 			ObjectMode = Flags.ObjectMode;

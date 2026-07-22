@@ -1,22 +1,22 @@
 local Pretty = require"Moonrise.Tools.Pretty"
-local OOP = require"Moonrise.OOP"
-
 local Execution = require"Adapt.Execution"
+local Compound = require"Adapt.Transform.Compound"
+
+local OOP = require"Moonrise.OOP"
 
 ---@class Adapt.Transform.All : Adapt.Transform.Compound
 ---@field Children {Pattern: Adapt.Transform.Base}
 ---@overload fun(Pattern: Adapt.Transform.Base): Adapt.Transform.All
 local All = OOP.Declarator.Shortcuts(
 	"Adapt.Transform.All", {
-		require"Adapt.Transform.Compound"
+		Compound
 	}
 )
 
 ---@param Instance Adapt.Transform.All
 ---@param Pattern Adapt.Transform.Base
 function All:Initialize(Instance, Pattern)
-		---@diagnostic disable-next-line:undefined-field
-		All.Parents.Compound:Initialize(Instance, {Pattern = Pattern})
+		Compound:Initialize(Instance, {Pattern = Pattern})
 end
 
 ---@param CurrentState Adapt.Execution.State
@@ -40,6 +40,7 @@ function All:Lower(CurrentState, Arguments)
 				return false
 			end
 		end
+		CurrentState:AddConstraint(self.Children.Pattern, nil, "Negative")
 		return true, Results
 	else
 		error"Must be a bubble"
@@ -76,14 +77,14 @@ function All:__tostring()
 	return Pretty.ToString(self)
 end
 
----@param Buffer Moonrise.Stream.Base
+---@param Sink Moonrise.Stream.Formatter.Fancy
 ---@param Flags Tools.Pretty.Any.Flags
 ---@param Cache Tools.Pretty.Any.Cache
 ---@param Mentioned Tools.Pretty.Any.Mentioned
-function All:__pretty(Buffer, Flags, Cache, Mentioned)
-	Buffer:Write("Adapt.Transform.All(")
-	Pretty.Any(self.Children.Pattern, Buffer, Flags, Cache, Mentioned)
-	Buffer:Write")"
+function All:__pretty(Sink, Flags, Cache, Mentioned)
+	Sink:Write("Adapt.Transform.All(")
+	Pretty.Any(self.Children.Pattern, Sink, Flags, Cache, Mentioned)
+	Sink:Write")"
 end
 
 return All

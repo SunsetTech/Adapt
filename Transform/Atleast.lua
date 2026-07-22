@@ -47,6 +47,7 @@ function Atleast:Lower(CurrentState, Arguments)
 				return false, Results
 			end
 		end
+		CurrentState:AddConstraint(self.Children.Pattern, nil, "Negative")
 		return true, Results
 	else
 		error"Must be a bubble"
