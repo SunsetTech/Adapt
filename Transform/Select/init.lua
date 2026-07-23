@@ -79,9 +79,13 @@ function Select:__tostring()
 	return "(".. table.concat(Parts, " + ") ..")"
 end
 
-function Select:__pretty(Buffer, Flags, Cache, Mentioned)
-	Buffer:Write"Adapt.Transform.Select"
-	Pretty.Any(self.Children, Buffer, Flags, Cache, Mentioned)
+---@param Sink Moonrise.Stream.Formatter.Fancy
+---@param Flags Tools.Pretty.Any.Flags?
+---@param Cache Tools.Pretty.Any.Cache?
+---@param Mentioned Tools.Pretty.Any.Mentioned?
+function Select:__pretty(Sink, Flags, Cache, Mentioned)
+	Sink:Write"Adapt.Transform.Select"
+	Pretty.Any(self.Children, Sink, Flags, Cache, Mentioned)
 end
 
 return Select

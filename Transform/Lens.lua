@@ -87,7 +87,7 @@ function Lens:__tostring()
 	return "(".. tostring(self.Children.__LensSubpattern) .."/{".. (self.Definition.__DebugName or tostring(self.Definition)) .."})"
 end
 
----@param Buffer Moonrise.Stream.Formatter.Indented
+---@param Buffer Moonrise.Stream.Formatter.Fancy
 ---@param Flags Tools.Pretty.Any.Flags
 ---@param Cache Tools.Pretty.Any.Cache
 ---@param Mentioned Tools.Pretty.Any.Mentioned
@@ -95,7 +95,7 @@ function Lens:__pretty(Buffer, Flags, Cache, Mentioned)
 	Buffer:Write"Adapt.Transform.Lens("
 	if Flags.Multiline then
 		Buffer:NewLine()
-		Buffer:AdjustIndentation(1)
+		Buffer.Level = Buffer.Level + 1
 	end
 	Pretty.Any(self.Children.__LensSubpattern, Buffer, Flags, Cache, Mentioned)
 	Buffer:Write", "
@@ -105,7 +105,7 @@ function Lens:__pretty(Buffer, Flags, Cache, Mentioned)
 	Buffer:Write(self.Definition.__DebugName or tostring(self.Definition))
 	if Flags.Multiline then
 		Buffer:NewLine()
-		Buffer:AdjustIndentation(-1)
+		Buffer.Level = Buffer.Level - 1
 	end
 	Buffer:Write")"
 end

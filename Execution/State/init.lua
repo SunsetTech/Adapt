@@ -127,6 +127,7 @@ end
 ---@return Adapt.Execution.State.Frame ResultFrame
 function State:CommitFrame(Bookmark)
 	local ResultFrame = self:CloseFrame(Bookmark)
+	Array.Clean(ResultFrame.Constraints)
 	Array.ShallowCopy(Bookmark.Constraints, ResultFrame.Constraints)
 	Array.Clean(Bookmark.Constraints)
 	for _, Key in ipairs(Bookmark.Data.Variables.Keys) do

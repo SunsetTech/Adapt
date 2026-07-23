@@ -1,4 +1,5 @@
 local Pretty = require"Moonrise.Tools.Pretty"
+local OOP = require"Moonrise.OOP"
 local Terminal = require"Moonrise.Tools.Terminal"
 
 local Trace; Trace = {
@@ -51,7 +52,8 @@ local Trace; Trace = {
 		TraceSink:Write" "
 		TraceSink:Write(CurrentState.Maps.Name[Pattern])
 		TraceSink:Write"("
-		Pretty.Any(Pattern, ObjectSink, Flags, Cache, Mentioned)
+		TraceSink:Write(OOP.Reflection.Type.Name(Pattern))
+		--Pretty.Any(Pattern, ObjectSink, Flags, Cache, Mentioned)
 		TraceSink:Write")"
 		TraceSink:NewLine()
 		TraceSink.Level = TraceSink.Level + 1
@@ -94,13 +96,14 @@ local Trace; Trace = {
 		TraceSink:Write" "
 		TraceSink:Write(CurrentState.Maps.Name[Pattern])
 		TraceSink:Write"("
-		Pretty.Any(
+		TraceSink:Write(OOP.Reflection.Type.Name(Pattern))
+		--[[Pretty.Any(
 			Pattern,
 			ObjectSink,
 			Flags,
 			Cache,
 			Mentioned
-		)
+		)]]
 		TraceSink:Write") <- "
 		if Method == "Raise" then
 			local Read = Trace.GetMatched(CurrentState, Frame.Translation.At):gsub("\n","\\n")
